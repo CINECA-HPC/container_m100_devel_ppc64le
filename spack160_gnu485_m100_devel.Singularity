@@ -13,7 +13,6 @@ yum install -y c-ares c-ares-devel Lmod
 yum install -y  bzip2  gzip tar  zip unzip xz curl wget vim patch make cmake file git which perl-Data-Dumper perl-Thread-Queue boost-devel
 yum install -y numactl-libs gtk2 atk cairo tcsh lsof ethtool tk pciutils libnl3 libmnl libudev-devel
 
-
 # INSTALL MELLANOX
 
 cd /opt
@@ -38,6 +37,9 @@ rm -f cuda_driver_m100.tar.gz
 #yum install -y libmlx4 librdmacm librdmacm-utils mstflint opensm-libs perftest qperf rdma libjpeg-turbo-devel libpng-devel openssh-clients 
 #yum install -y openssh-server subversion libffi libffi-devel scl-utils 
 #yum install -y libpsm2 libpsm2-devel pmix pmix-devel
+
+rm -rf /var/cache/yum 
+yum clean all
 
 # INSTALL SPACK
 
