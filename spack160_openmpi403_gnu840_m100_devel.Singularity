@@ -38,12 +38,6 @@ tar xvf cuda_driver_m100.tar.gz
 yum -c /opt/nvidia-driver-local-repo-440.64.00/etc/yum.repos.d/nvidia-driver-local-440.64.00.repo install -y cuda-drivers
 rm -f cuda_driver_m100.tar.gz
 
-
-#yum install -y openssl libibverbs-devel rdma-core-devel openssl-devel binutils dapl dapl-utils ibacm infiniband-diags libibverbs libibverbs-utils
-#yum install -y libmlx4 librdmacm librdmacm-utils mstflint opensm-libs perftest qperf rdma libjpeg-turbo-devel libpng-devel openssh-clients 
-#yum install -y openssh-server subversion libffi libffi-devel scl-utils 
-#yum install -y libpsm2 libpsm2-devel pmix pmix-devel
-
 # INSTALL SPACK
 
 cd /opt 
@@ -115,22 +109,6 @@ spack install openmpi@4.0.3 %gcc@8.4.0 +cuda +pmi +legacylaunchers schedulers=sl
 
 spack gc -y
 
-
-# INSTALL ESSENTIAL SOFTWARE FOR DEVELOPMENT CUDA-LIBRARY + OPENMPI
-
-#spack install openmpi@4.0.3  %gcc@8.4.0 +cuda +pmi +legacylaunchers schedulers=slurm fabrics=ucx,mxm,hcoll ^slurm@19-05-6-1 ^ucx@1.7.0 +cuda cuda_arch=70 ^cuda@10.2.89
-
-#spack install py-horovod@0.19.2%gcc@7.3.1 frameworks=pytorch,tensorflow \
-#  ^py-tensorflow@2.0.0%gcc@7.3.1 +cuda +mpi +numa cuda_arch=70 \
-#  ^py-torch@1.5.0%gcc@7.3.1 cuda_arch=70 ~mkldnn +caffe2 \
-#  ^bazel@0.26.1%gcc@7.3.1 \
-#  ^nccl@2.7.8-1%gcc@7.3.1+cuda cuda_arch=70 \
-#  ^openmpi@4.0.3 %gcc@7.3.1 +cuda +pmi +legacylaunchers schedulers=slurm +singularity fabrics=ucx,psm2,verbs \
-#  ^slurm@19-05-6-1%gcc@7.3.1 \
-#  ^cuda@10.1.243%gcc@7.3.1 \
-#  ^cudnn@7.6.4.38-10.1-linux-x64%gcc@7.3.1 \
-#  ^ucx@1.8.1%gcc@7.3.1+cuda cuda_arch=70
-
 # ADDITIONAL FILES TO HANDLE ENVIRONMENT VARIABLES
 
 cat > /opt/load_module_spack_env.txt <<EOF
@@ -186,7 +164,3 @@ export SPACK_ROOT=/opt/spack
 export PATH=/usr/share/lmod/8.2.7/libexec/lmod:${SPACK_ROOT}/bin:$PATH
 export LMOD_CMD=/usr/share/lmod/8.2.7/libexec/lmod
 export MODULEPATH=/opt/spack/share/spack/modules/linux-centos7-power8le:/opt/spack/share/spack/modules/linux-centos7-power9le
-
-#%startscript
-#source /opt/spack/share/spack/setup-env.sh 
-#source /usr/share/lmod/8.2.7/init/sh
