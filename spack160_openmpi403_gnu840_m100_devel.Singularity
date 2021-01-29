@@ -2,6 +2,8 @@ Bootstrap: docker
 From: centos:centos7.6.1810
 IncludeCmd: yes
 
+# do not change the centos version because it interact with cuda and mellanox drivers
+
 # IMPORTANT: When you are going to work inside the container remember to source these 2 file in order to set the proper module environment with spack and Lmod
 # source /opt/spack/share/spack/setup-env.sh && source /usr/share/lmod/8.2.7/init/sh
 
@@ -11,6 +13,8 @@ mkdir /tmp_locale
 chmod 777 -R /tmp_locale
 export TMPDIR=/tmp_locale
 export TMP=/tmp_locale
+
+# Lmod is important for managing the module environment
 
 yum -y install epel-release
 yum -y groupinstall "Development tools"
@@ -31,6 +35,7 @@ rm -rf MLNX_OFED_LINUX-4.7-3.2.9.1-rhel7.6alternate-ppc64le.tar.gz MLNX_OFED_LIN
 
 
 # INSTALL CUDA DRIVERS
+# The cuda driver repo was modified ad-hoc
 
 cd /opt
 wget https://b2drop.eudat.eu/s/Xd9YmJd9ZQzKwM2/download -O cuda_driver_m100.tar.gz
@@ -104,6 +109,8 @@ cat >> /opt/spack/etc/spack/defaults/packages.yaml <<EOF
 EOF
 
 # INSTALL OPENMPI 
+
+# Syncronize the slurm version, ucx version, cuda lib version with the ones on the host
 
 spack install openmpi@4.0.3 %gcc@8.4.0 +cuda +pmi +legacylaunchers schedulers=slurm fabrics=ucx,ofi,cma,mxm,hcoll  ^slurm@20-02-4-1 +pmix ^ucx@1.7.0 +cuda cuda_arch=70 ^python@3.8.2 ^cuda@10.2.89
 
